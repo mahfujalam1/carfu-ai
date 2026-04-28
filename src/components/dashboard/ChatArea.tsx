@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { FiMic, FiArrowRight, FiPlus, FiDownload, FiPlay } from "react-icons/fi";
-import { X } from "lucide-react";
+  import { FiMic, FiArrowRight, FiPlus, FiPlay } from "react-icons/fi";
+import { X } from "lucide-react"; 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 import type { Message } from "@/pages/dashboard/DashboardPage";
@@ -131,29 +130,8 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
       setMessages(prev => [...prev, aiResponse]);
       setIsGenerating(false);
     }, 2000);
-  };
-
-  const downloadVideo = async (url: string) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.setAttribute("download", `carfu-ai-video-${Date.now()}.mp4`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error("Direct download failed, attempting fallback:", error);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "video.mp4");
-      link.click();
-    }
-  };
-
+  }
+  
   return (
     <div className="flex-1 flex flex-col bg-[#121212] relative overflow-hidden h-screen">
       {/* Background Decor */}
