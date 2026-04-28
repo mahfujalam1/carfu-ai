@@ -12,11 +12,11 @@ export default function AuthLayout() {
   const gif = getGifForRoute(location.pathname);
 
   return (
-    <div className="flex max-h-screen w-full bg-white dark:bg-zinc-950 relative">
+    <div className="flex max-h-screen w-full bg-white relative">
       {/* Home Button */}
       <Link
         to="/"
-        className="absolute top-8 right-8 z-50 flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors font-medium text-sm"
+        className="absolute top-8 right-8 z-50 flex items-center gap-2 text-zinc-500 transition-colors font-medium text-sm"
       >
         <FiHome size={18} />
         Home

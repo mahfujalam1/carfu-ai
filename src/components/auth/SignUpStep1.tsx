@@ -10,12 +10,12 @@ export default function Step1({ onNext }: Step1Props) {
   return (
     <div className="flex flex-col gap-6 text-center lg:text-left">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">Carfu AI</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Carfu AI</h1>
         <div className="h-8" />
-        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Sign up</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900">Sign up</h2>
+        <p className="text-sm text-zinc-500">
           Enter your email address or{" "}
-          <Link to="/auth/login" className="text-zinc-900 dark:text-zinc-100 font-semibold hover:underline">
+          <Link to="/auth/login" className="text-zinc-900  font-semibold hover:underline">
             Log in
           </Link>
         </p>

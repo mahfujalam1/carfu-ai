@@ -17,9 +17,9 @@ export default function Step3({ onFinish }: Step3Props) {
   return (
     <div className="flex flex-col gap-6 text-center lg:text-left">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 font-sans">Carfu AI</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 font-sans">Carfu AI</h1>
         <div className="h-8" />
-        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Set up profile</h2>
+        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900">Set up profile</h2>
       </div>
 
       <div className="flex justify-center mt-4">
