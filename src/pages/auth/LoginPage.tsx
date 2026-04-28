@@ -66,7 +66,7 @@ export default function LoginPage() {
       <div className="text-center">
         <Link
           to="/auth/forgot-password"
-          className="text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+          className="text-sm font-medium text-zinc-600 hover:text-zinc-900"
         >
           Forgot password?
         </Link>

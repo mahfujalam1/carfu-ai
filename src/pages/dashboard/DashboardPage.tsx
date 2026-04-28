@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
-import ChatArea from "@/components/dashboard/ChatArea";
 import Preloader from "@/components/shared/Preloader";
+import ChatArea from "@/components/dashboard/ChatArea";
 
 export interface Message {
   role: "user" | "ai";
@@ -99,7 +99,7 @@ export default function DashboardPage() {
         onDeleteChat={deleteChat}
       />
       <div className="flex-1 flex flex-col min-w-0">
-        <ChatArea 
+        <ChatArea
           messages={activeChat?.messages || []} 
           setMessages={(updater) => {
             if (typeof updater === "function") {

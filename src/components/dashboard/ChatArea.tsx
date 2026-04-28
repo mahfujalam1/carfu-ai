@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { FiMic, FiArrowRight, FiPlus, FiDownload, FiPlay } from "react-icons/fi";
 import { X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 import type { Message } from "@/pages/dashboard/DashboardPage";
@@ -18,7 +20,7 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [volume, setVolume] = useState<number[]>(new Array(8).fill(0));
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -28,30 +30,30 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
+
       // Audio Visualizer Logic
       const audioContext = new AudioContext();
       const source = audioContext.createMediaStreamSource(stream);
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = 64;
       source.connect(analyser);
-      
+
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
-      
+
       audioContextRef.current = audioContext;
       analyserRef.current = analyser;
 
       const updateVisualizer = () => {
         if (!analyserRef.current) return;
         analyserRef.current.getByteFrequencyData(dataArray);
-        
+
         // Take a slice of the data to animate 8 bars
         const newVolumes = Array.from(dataArray.slice(0, 8)).map(v => v / 255);
         setVolume(newVolumes);
         animationFrameRef.current = requestAnimationFrame(updateVisualizer);
       };
-      
+
       updateVisualizer();
 
       // MediaRecorder Logic
@@ -64,7 +66,7 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
         const audioFile = new File([blob], "voice-input.ogg", { type: "audio/ogg" });
         setFile(audioFile);
         setIsRecording(false);
-        
+
         // Cleanup Audio Context
         if (audioContextRef.current) {
           audioContextRef.current.close();
@@ -131,21 +133,33 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
     }, 2000);
   };
 
-  const downloadVideo = (url: string) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "generated-video.mp4");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const downloadVideo = async (url: string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", `carfu-ai-video-${Date.now()}.mp4`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Direct download failed, attempting fallback:", error);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "video.mp4");
+      link.click();
+    }
   };
 
   return (
     <div className="flex-1 flex flex-col bg-[#121212] relative overflow-hidden h-screen">
       {/* Background Decor */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-20 z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-white/5 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-white/5 blur-[120px] rounded-full" />
       </div>
 
       {/* Main Content Area - Scrollable */}
@@ -168,54 +182,48 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
                 </div>
               )}
 
-              {/* Chat Messages */}
-              <div className="space-y-8">
+              {/* Messages Area */}
+              <div className="space-y-6 md:space-y-8">
                 {messages.map((msg, idx) => (
-                  <div key={idx} className={cn("flex flex-col gap-4", msg.role === "user" ? "items-end" : "items-start")}>
+                  <div key={idx} className={cn(
+                    "flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500",
+                    msg.role === "user" ? "items-end" : "items-start"
+                  )}>
                     {msg.role === "user" ? (
-                      <div className="bg-[#1c1c1c] text-white px-6 py-3 rounded-[24px] rounded-tr-none text-sm border border-white/5 shadow-xl max-w-[80%] animate-in slide-in-from-right-4">
+                      <div className="bg-white text-black px-4 md:px-6 py-3 md:py-4 rounded-[20px] md:rounded-[28px] max-w-[85%] md:max-w-[80%] text-sm md:text-base font-medium shadow-xl">
                         {msg.content}
                       </div>
                     ) : (
-                      <div className="flex gap-4 animate-in slide-in-from-left-4 duration-500 w-full">
-                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/10 shadow-lg">
-                          <div className="w-4 h-4 bg-white rounded-sm rotate-45" />
-                        </div>
-                        <div className="space-y-4 flex-1 max-w-[85%]">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-white">Carfu AI</span>
-                            <span className="px-2 py-0.5 bg-white/5 text-zinc-500 text-[10px] rounded-full uppercase font-bold tracking-tighter">Sparkle</span>
+                      <div className="flex gap-3 md:gap-4 max-w-full">
+                        <Avatar className="w-8 h-8 md:w-10 md:h-10 border border-white/10 shrink-0">
+                          <AvatarImage src="https://images.unsplash.com/photo-1675271591211-126ad94e495d?auto=format&fit=crop&q=80&w=128&h=128" />
+                          <AvatarFallback>AI</AvatarFallback>
+                        </Avatar>
+                        <div className="space-y-4 md:space-y-6 flex-1 min-w-0">
+                          <div className="text-zinc-300 leading-relaxed text-sm md:text-base pr-4">
+                            {msg.content}
                           </div>
-                          <p className="text-zinc-300 text-sm leading-relaxed">{msg.content}</p>
-                          
+
                           {msg.videoUrl && (
-                            <div className="relative group/video rounded-[32px] overflow-hidden border border-white/10 shadow-2xl bg-zinc-900 aspect-video">
-                              <video 
-                                src={msg.videoUrl} 
+                            <div className="relative group/video rounded-[24px] md:rounded-[32px] overflow-hidden border border-white/10 shadow-2xl bg-zinc-900 aspect-video max-w-full">
+                              <video
+                                src={msg.videoUrl}
                                 poster={msg.thumbnail}
-                                className="w-full h-full object-cover opacity-80"
-                                controls={false}
+                                className="w-full h-full object-cover"
+                                controls
                                 id={`video-${idx}`}
                               />
-                              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
-                                <button 
-                                  onClick={() => {
+                              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-all pointer-events-none group-[.playing]/video:hidden">
+                                <button
+                                  onClick={(e) => {
                                     const v = document.getElementById(`video-${idx}`) as HTMLVideoElement;
-                                    if (v.paused) v.play(); else v.pause();
+                                    const container = e.currentTarget.closest('.group\\/video');
+                                    v.play();
+                                    container?.classList.add('playing');
                                   }}
-                                  className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform cursor-pointer"
+                                  className="w-12 h-12 md:w-16 md:h-16 bg-white text-black rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform cursor-pointer pointer-events-auto"
                                 >
-                                  <FiPlay size={24} fill="black" className="ml-1" />
-                                </button>
-                              </div>
-                              
-                              <div className="absolute bottom-6 right-6 flex gap-3">
-                                <button 
-                                  onClick={() => downloadVideo(msg.videoUrl!)}
-                                  className="bg-white/10 backdrop-blur-md text-white px-5 py-2.5 rounded-2xl hover:bg-white/20 transition-all flex items-center gap-2 text-xs font-bold border border-white/5 shadow-xl cursor-pointer"
-                                >
-                                  <FiDownload size={16} />
-                                  Download
+                                  <FiPlay size={20} className="md:w-6 md:h-6 ml-1" fill="black" />
                                 </button>
                               </div>
                             </div>
@@ -247,7 +255,7 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
       <div className="w-full bg-[#121212] border-t border-white/5 z-20 px-4 md:px-6 py-4 md:py-8 flex-shrink-0">
         <div className="max-w-3xl mx-auto w-full relative group">
           <div className="absolute inset-0 bg-white/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all" />
-          
+
           {file && (
             <div className="absolute -top-12 left-2 md:left-4 bg-zinc-800 px-3 py-1.5 rounded-xl border border-white/10 flex items-center gap-2 text-[10px] md:text-xs text-zinc-300 animate-in fade-in slide-in-from-bottom-2">
               <span className="truncate max-w-[120px] md:max-w-[150px]">{file.name}</span>
@@ -262,38 +270,38 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
             {isRecording && (
               <div className="absolute inset-x-4 -top-8 flex items-end justify-center gap-1 h-6 pointer-events-none">
                 {volume.map((v, i) => (
-                  <div 
-                    key={i} 
-                    style={{ height: `${Math.max(20, v * 100)}%` }} 
+                  <div
+                    key={i}
+                    style={{ height: `${Math.max(20, v * 100)}%` }}
                     className="w-1 bg-red-500 rounded-full transition-all duration-75"
                   />
                 ))}
               </div>
             )}
-            
+
             <div className="flex items-center gap-1 md:gap-2">
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                className="hidden" 
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
                 onChange={handleFileChange}
               />
-              <button 
+              <button
                 onClick={() => fileInputRef.current?.click()}
                 className="p-1.5 md:p-2 text-zinc-500 hover:text-white transition-colors cursor-pointer"
               >
                 <FiPlus size={18} className="md:w-5 md:h-5" />
               </button>
-              <textarea 
+              <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } }}
-                placeholder="Write something..." 
+                placeholder="Write something..."
                 className="flex-1 bg-transparent border-none outline-none p-1.5 md:p-2 text-sm md:text-base text-white placeholder:text-zinc-600 resize-none min-h-[40px] md:min-h-[44px] max-h-32"
                 rows={1}
               />
               <div className="flex items-center gap-1 md:gap-2">
-                <button 
+                <button
                   onClick={isRecording ? stopRecording : startRecording}
                   className={cn(
                     "p-1.5 md:p-2 transition-all cursor-pointer rounded-lg hover:bg-white/5",
@@ -302,7 +310,7 @@ export default function ChatArea({ messages, setMessages }: ChatAreaProps) {
                 >
                   <FiMic size={18} className="md:w-5 md:h-5" />
                 </button>
-                <button 
+                <button
                   onClick={handleSend}
                   className="bg-white text-black p-2 md:p-2.5 rounded-xl hover:bg-zinc-200 transition-colors shadow-lg cursor-pointer"
                 >
