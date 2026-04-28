@@ -25,7 +25,7 @@ export default function Step2({ onNext }: Step2Props) {
         <Input
           type={showPassword ? "text" : "password"}
           placeholder="Password"
-          className="h-12 bg-zinc-50 border-none rounded-2xl px-4 pr-12"
+          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 pr-12 focus-visible:ring-zinc-200 transition-all"
           required
         />
         <button

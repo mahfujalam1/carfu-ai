@@ -25,7 +25,7 @@ export default function Step1({ onNext }: Step1Props) {
         <Input
           type="email"
           placeholder="Email"
-          className="h-12 bg-zinc-50 border-none rounded-2xl px-4"
+          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 focus-visible:ring-zinc-200 transition-all"
           required
         />
         <Button 

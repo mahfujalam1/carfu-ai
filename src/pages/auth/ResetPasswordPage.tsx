@@ -24,7 +24,7 @@ export default function ResetPasswordPage() {
           <Input
             type={showPassword ? "text" : "password"}
             placeholder="New Password"
-            className="h-12 bg-zinc-50 border-none rounded-2xl px-4 pr-12"
+            className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 pr-12 focus-visible:ring-zinc-200 transition-all"
             required
           />
           <button
@@ -38,7 +38,7 @@ export default function ResetPasswordPage() {
         <Input
           type="password"
           placeholder="Confirm Password"
-          className="h-12 bg-zinc-50 border-none rounded-2xl px-4"
+          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 focus-visible:ring-zinc-200 transition-all"
           required
         />
         <Button 

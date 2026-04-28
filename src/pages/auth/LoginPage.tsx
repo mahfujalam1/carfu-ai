@@ -35,7 +35,7 @@ export default function LoginPage() {
             id="email"
             type="email"
             placeholder="Email"
-            className="h-12 bg-zinc-50 border-none rounded-2xl px-4"
+            className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 focus-visible:ring-zinc-200 transition-all"
             required
           />
         </div>
@@ -44,7 +44,7 @@ export default function LoginPage() {
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="h-12 bg-zinc-50 border-none rounded-2xl px-4 pr-12"
+            className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 pr-12 focus-visible:ring-zinc-200 transition-all"
             required
           />
           <button
