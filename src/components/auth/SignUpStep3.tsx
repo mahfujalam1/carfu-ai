@@ -37,12 +37,12 @@ export default function Step3({ onFinish }: Step3Props) {
       <div className="grid gap-4 mt-4">
         <Input
           placeholder="Enter your name"
-          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 focus-visible:ring-zinc-200 transition-all"
+          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 focus-visible:ring-zinc-200 transition-all text-black"
           required
         />
         <Input
           placeholder="Date of birth"
-          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 text-zinc-400 focus-visible:ring-zinc-200 transition-all"
+          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 text-zinc-400 focus-visible:ring-zinc-200 transition-all text-black"
           onFocus={(e) => (e.target.type = "date")}
           onBlur={(e) => (e.target.type = "text")}
           required

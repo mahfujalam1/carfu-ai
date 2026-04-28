@@ -70,7 +70,7 @@ export default function OTPPage() {
               ref={(el) => { inputRefs.current[i] = el; }}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
-              className="w-10 h-14 md:w-12 md:h-16 text-center text-xl md:text-2xl font-bold bg-zinc-50 dark:bg-zinc-900/50 border-2 border-transparent focus:border-zinc-900 dark:focus:border-white transition-all rounded-xl"
+              className="w-10 h-14 md:w-12 md:h-16 text-center text-xl md:text-2xl font-bold bg-zinc-50 dark:bg-zinc-900/50 border-2 border-transparent focus:border-zinc-900 dark:focus:border-white transition-all rounded-xl text-black"
             />
           ))}
         </div>

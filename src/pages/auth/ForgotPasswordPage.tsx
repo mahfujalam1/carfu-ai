@@ -20,7 +20,7 @@ export default function ForgotPasswordPage() {
         <Input
           type="email"
           placeholder="Email"
-          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 focus-visible:ring-zinc-200 transition-all"
+          className="h-12 bg-zinc-50 border border-zinc-100 rounded-2xl px-4 focus-visible:ring-zinc-200 transition-all text-black"
           required
         />
         <Button
