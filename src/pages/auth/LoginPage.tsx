@@ -18,12 +18,12 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col gap-6 text-center lg:text-left">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 font-sans">Carfu AI</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 font-sans">Carfu AI</h1>
         <div className="h-8" /> {/* Spacer */}
-        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Welcome Back</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900">Welcome Back</h2>
+        <p className="text-sm text-zinc-500">
           Log in to your account or{" "}
-          <Link to="/auth/signup" className="text-zinc-900 dark:text-zinc-100 font-semibold hover:underline">
+          <Link to="/auth/signup" className="text-zinc-900 font-semibold hover:underline">
             Sign up
           </Link>
         </p>

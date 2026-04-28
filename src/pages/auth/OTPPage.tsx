@@ -49,10 +49,10 @@ export default function OTPPage() {
   return (
     <div className="flex flex-col gap-6 text-center lg:text-left animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">Carfu AI</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Carfu AI</h1>
         <div className="h-8" />
-        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Enter OTP</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+        <h2 className="text-4xl font-semibold tracking-tight text-zinc-900">Enter OTP</h2>
+        <p className="text-sm text-zinc-500">
           We sent a code to your email
         </p>
       </div>
