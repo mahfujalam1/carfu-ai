@@ -155,6 +155,20 @@ export default function SettingsPage() {
 
               <div className="flex flex-col gap-3 max-w-xl">
 
+                <div className="bg-[#1e1e1e] rounded-2xl px-6 py-5 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-zinc-500 mb-1">Current Plan</p>
+                    <p className="text-lg font-semibold text-white mb-1">Free</p>
+                    <p className="text-white">
+                      <span className="text-3xl font-bold">$0</span>
+                      <span className="text-sm text-zinc-500 font-normal">/7 days</span>
+                    </p>
+                  </div>
+                  <Button className="bg-[#2e2e2e] text-zinc-300 hover:bg-zinc-700 border-0 rounded-full px-6 h-10 font-medium">
+                    Cancel
+                  </Button>
+                </div>
+
                 {/* Current Plan - Basic */}
                 <div className="bg-[#1e1e1e] rounded-2xl px-6 py-5 flex items-center justify-between">
                   <div>
@@ -166,7 +180,7 @@ export default function SettingsPage() {
                     </p>
                   </div>
                   <Button className="bg-[#2e2e2e] text-zinc-300 hover:bg-zinc-700 border-0 rounded-full px-6 h-10 font-medium">
-                    Cancel
+                    Upgrade
                   </Button>
                 </div>
 
@@ -184,22 +198,6 @@ export default function SettingsPage() {
                     Get
                   </Button>
                 </div>
-
-                {/* Available Plan - Enterprise */}
-                <div className="bg-[#1e1e1e] rounded-2xl px-6 py-5 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-zinc-500 mb-1">Available Plan</p>
-                    <p className="text-lg font-semibold text-white mb-1">Enterprise</p>
-                    <p className="text-white">
-                      <span className="text-3xl font-bold">Custom</span>
-                      <span className="text-sm text-zinc-500 font-normal">/year</span>
-                    </p>
-                  </div>
-                  <Button className="bg-white text-black hover:bg-zinc-200 border-0 rounded-full px-6 h-10 font-medium">
-                    Contact
-                  </Button>
-                </div>
-
               </div>
             </div>
           )}
