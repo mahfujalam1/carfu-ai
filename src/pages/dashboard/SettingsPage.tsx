@@ -102,18 +102,39 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid gap-6">
+                {/* Full Name */}
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-zinc-400 ml-1">First Name</label>
-                  <Input defaultValue="Jane" className="bg-white/5 border-white/5 h-12 md:h-14 rounded-xl md:rounded-2xl focus-visible:ring-white/20" />
+                  <label className="text-sm font-semibold text-zinc-400 ml-1">Full Name</label>
+                  <Input
+                    defaultValue="Jane Doe"
+                    className="bg-white/5 border-white/5 h-12 md:h-14 rounded-xl md:rounded-2xl focus-visible:ring-white/20"
+                  />
                 </div>
+
+                {/* Email - Readonly */}
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-zinc-400 ml-1">Last Name</label>
-                  <Input defaultValue="Doe" className="bg-white/5 border-white/5 h-12 md:h-14 rounded-xl md:rounded-2xl focus-visible:ring-white/20" />
-                </div>
-                <div className="sm:col-span-2 space-y-2">
                   <label className="text-sm font-semibold text-zinc-400 ml-1">Email Address</label>
-                  <Input defaultValue="jane@example.com" className="bg-white/5 border-white/5 h-12 md:h-14 rounded-xl md:rounded-2xl focus-visible:ring-white/20" />
+                  <div className="relative">
+                    <Input
+                      defaultValue="jane@example.com"
+                      readOnly
+                      className="bg-white/[0.03] border-white/5 h-12 md:h-14 rounded-xl md:rounded-2xl focus-visible:ring-0 text-zinc-500 cursor-not-allowed pr-24"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-bold text-zinc-600 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-lg">
+                      Readonly
+                    </span>
+                  </div>
+                </div>
+
+                {/* Date of Birth */}
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-zinc-400 ml-1">Date of Birth</label>
+                  <Input
+                    type="date"
+                    defaultValue="1998-05-14"
+                    className="bg-white/5 border-white/5 h-12 md:h-14 rounded-xl md:rounded-2xl focus-visible:ring-white/20 text-white [color-scheme:dark] cursor-pointer"
+                  />
                 </div>
               </div>
 
@@ -129,41 +150,56 @@ export default function SettingsPage() {
           {activeTab === "subscription" && (
             <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div>
-                <h2 className="text-3xl font-bold mb-2">Subscription</h2>
-                <p className="text-zinc-500 text-sm md:text-base">Manage your billing and subscription plan.</p>
+                <h2 className="text-3xl font-bold mb-2">Manage Plan</h2>
               </div>
 
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div className="bg-[#121212] border border-white/10 rounded-[32px] p-8 space-y-6 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <FiCreditCard size={80} />
-                  </div>
+              <div className="flex flex-col gap-3 max-w-xl">
+
+                {/* Current Plan - Basic */}
+                <div className="bg-[#1e1e1e] rounded-2xl px-6 py-5 flex items-center justify-between">
                   <div>
-                    <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">Current Plan</p>
-                    <h3 className="text-2xl font-bold">Carfu Pro</h3>
-                    <p className="text-zinc-400 text-sm mt-1">Next billing date: Oct 28, 2026</p>
+                    <p className="text-xs text-zinc-500 mb-1">Current Plan</p>
+                    <p className="text-lg font-semibold text-white mb-1">Basic</p>
+                    <p className="text-white">
+                      <span className="text-3xl font-bold">$10</span>
+                      <span className="text-sm text-zinc-500 font-normal">/month</span>
+                    </p>
                   </div>
-                  <div className="text-3xl font-bold">
-                    $25<span className="text-sm font-normal text-zinc-500">/month</span>
-                  </div>
-                  <Button className="w-full bg-white/5 text-white hover:bg-white/10 border border-white/5 rounded-2xl h-12 font-bold">
-                    Manage Billing
+                  <Button className="bg-[#2e2e2e] text-zinc-300 hover:bg-zinc-700 border-0 rounded-full px-6 h-10 font-medium">
+                    Cancel
                   </Button>
                 </div>
 
-                <div className="bg-white text-black rounded-[32px] p-8 space-y-6 shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+                {/* Available Plan - Pro */}
+                <div className="bg-[#1e1e1e] rounded-2xl px-6 py-5 flex items-center justify-between">
                   <div>
-                    <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">Upgrade</p>
-                    <h3 className="text-2xl font-bold">Enterprise</h3>
-                    <p className="text-zinc-600 text-sm mt-1">Unlimited video generation & 4K quality.</p>
+                    <p className="text-xs text-zinc-500 mb-1">Available Plan</p>
+                    <p className="text-lg font-semibold text-white mb-1">Pro</p>
+                    <p className="text-white">
+                      <span className="text-3xl font-bold">$25</span>
+                      <span className="text-sm text-zinc-500 font-normal">/month</span>
+                    </p>
                   </div>
-                  <div className="text-3xl font-bold">
-                    Custom<span className="text-sm font-normal text-zinc-400">/year</span>
-                  </div>
-                  <Button className="w-full bg-black text-white hover:bg-zinc-800 rounded-2xl h-12 font-bold">
-                    Contact Sales
+                  <Button className="bg-white text-black hover:bg-zinc-200 border-0 rounded-full px-6 h-10 font-medium">
+                    Get
                   </Button>
                 </div>
+
+                {/* Available Plan - Enterprise */}
+                <div className="bg-[#1e1e1e] rounded-2xl px-6 py-5 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-zinc-500 mb-1">Available Plan</p>
+                    <p className="text-lg font-semibold text-white mb-1">Enterprise</p>
+                    <p className="text-white">
+                      <span className="text-3xl font-bold">Custom</span>
+                      <span className="text-sm text-zinc-500 font-normal">/year</span>
+                    </p>
+                  </div>
+                  <Button className="bg-white text-black hover:bg-zinc-200 border-0 rounded-full px-6 h-10 font-medium">
+                    Contact
+                  </Button>
+                </div>
+
               </div>
             </div>
           )}

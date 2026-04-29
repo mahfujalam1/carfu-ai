@@ -9,7 +9,7 @@ export default function HomeLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="h-screen overflow-hidden bg-[#1c1c1c] text-white flex flex-col">
+    <div className="min-h-screen overflow-hidden bg-[#1c1c1c] text-white flex flex-col">
       {/* Navbar */}
       <nav className="flex items-center justify-between px-4 md:px-8 py-4 md:py-6 max-w-7xl mx-auto w-full relative z-50">
         <div className="flex items-center gap-12">
