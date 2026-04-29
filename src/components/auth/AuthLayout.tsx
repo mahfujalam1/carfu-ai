@@ -12,7 +12,7 @@ export default function AuthLayout() {
   const gif = getGifForRoute(location.pathname);
 
   return (
-    <div className="flex max-h-screen w-full bg-white relative">
+    <div className="flex min-h-screen w-full bg-white relative">
       {/* Home Button */}
       <Link
         to="/"

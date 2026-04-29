@@ -48,11 +48,11 @@ export default function HomePage() {
     <div className="min-h-screen bg-[#1c1c1c] text-white flex flex-col overflow-x-hidden">
       {/* Navbar */}
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-20">
-        <h1 className="text-5xl md:text-6xl font-bold text-center max-w-4xl">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10 md:-mt-20">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center max-w-4xl leading-tight mb-4 md:mb-0">
           Create Videos with Your Own AI Voice
         </h1>
-        <p className="text-zinc-400 text-center max-w-2xl mb-12 text-lg">
+        <p className="text-zinc-400 text-center max-w-2xl mt-4 mb-8 md:mb-12 text-base md:text-lg">
           Upload a video or image, add your script, and generate AI-powered videos with your own voice—no editing skills required.
         </p>
 
@@ -72,7 +72,7 @@ export default function HomePage() {
 
           <form
             onSubmit={handleSubmit}
-            className="relative flex items-center bg-[#2a2a2a] border border-white/10 rounded-full p-2 pl-4"
+            className="relative flex items-center bg-[#2a2a2a] border border-white/10 rounded-full p-2 pl-4 w-full min-w-0"
           >
             <input
               type="file"
@@ -84,16 +84,18 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="p-2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="flex-shrink-0 p-2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
             >
               <Plus size={20} />
             </button>
+
             <input
               type="text"
               placeholder="Write Something"
-              className="flex-1 bg-transparent border-none outline-none px-4 text-white placeholder:text-zinc-500"
+              className="flex-1 min-w-0 bg-transparent border-none outline-none px-3 text-white placeholder:text-zinc-500 text-sm"
             />
-            <div className="flex items-center gap-2 pr-2">
+            
+            <div className="flex-shrink-0 flex items-center gap-1 pr-1">
               <button
                 type="button"
                 onClick={toggleRecording}
@@ -102,10 +104,13 @@ export default function HomePage() {
                   isRecording ? "text-red-500 animate-pulse" : "text-zinc-400 hover:text-white"
                 )}
               >
-                <Mic size={20} />
+                <Mic size={18} />
               </button>
-              <button type="submit" className="bg-white text-black p-2.5 rounded-full hover:bg-zinc-200 transition-colors cursor-pointer">
-                <ArrowRight size={20} />
+              <button
+                type="submit"
+                className="bg-white text-black p-2 rounded-full hover:bg-zinc-200 transition-colors cursor-pointer"
+              >
+                <ArrowRight size={18} />
               </button>
             </div>
           </form>
