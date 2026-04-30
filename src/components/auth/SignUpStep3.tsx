@@ -5,6 +5,7 @@ import { Camera, X, Check, CreditCard, Lock } from "lucide-react";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 interface Step3Props {
   onFinish: () => void;
@@ -60,6 +61,8 @@ export default function Step3({ onFinish }: Step3Props) {
     expiry: "",
     cvc: "",
   });
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFinish = () => {
     setShowPricingModal(true);
@@ -104,6 +107,21 @@ export default function Step3({ onFinish }: Step3Props) {
       .replace(/(.{2})/, "$1/");
   };
 
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleIconClick = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <>
       <form onSubmit={(e) => { e.preventDefault(); handleFinish(); }} className="flex flex-col gap-6 text-center lg:text-left">
@@ -116,12 +134,27 @@ export default function Step3({ onFinish }: Step3Props) {
         <div className="flex justify-center mt-4">
           <div className="relative">
             <Avatar className="w-24 h-24 border-4 border-white shadow-sm">
-              <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256&h=256" />
+              {profileImage ? (
+                <AvatarImage src={profileImage} />
+              ) : (
+                <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256&h=256" />
+              )}
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>
-            <button type="button" className="absolute bottom-0 right-0 bg-black text-white p-1.5 rounded-full border-2 border-white shadow-sm">
+            <button
+              type="button"
+              onClick={handleIconClick}
+              className="absolute bottom-0 cursor-pointer right-0 bg-black text-white p-1.5 rounded-full border-2 border-white shadow-sm"
+            >
               <Camera size={14} />
             </button>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleImageUpload}
+              className="hidden"
+            />
           </div>
         </div>
 
