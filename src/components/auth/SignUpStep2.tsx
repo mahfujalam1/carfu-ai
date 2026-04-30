@@ -10,8 +10,13 @@ interface Step2Props {
 export default function Step2({ onNext }: Step2Props) {
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onNext();
+  };
+
   return (
-    <div className="flex flex-col gap-6 text-center lg:text-left">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-center lg:text-left">
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Carfu AI</h1>
         <div className="h-8" />
@@ -36,12 +41,12 @@ export default function Step2({ onNext }: Step2Props) {
           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
         </button>
         <Button 
-          onClick={onNext}
+          type="submit"
           className="h-14 bg-zinc-950 hover:bg-zinc-800 text-white rounded-full text-lg font-medium mt-4"
         >
           Continue
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

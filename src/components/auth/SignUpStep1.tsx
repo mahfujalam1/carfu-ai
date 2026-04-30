@@ -7,8 +7,13 @@ interface Step1Props {
 }
 
 export default function Step1({ onNext }: Step1Props) {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onNext();
+  };
+
   return (
-    <div className="flex flex-col gap-6 text-center lg:text-left">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-center lg:text-left">
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Carfu AI</h1>
         <div className="h-8" />
@@ -29,12 +34,12 @@ export default function Step1({ onNext }: Step1Props) {
           required
         />
         <Button 
-          onClick={onNext}
+          type="submit"
           className="h-14 bg-zinc-950 hover:bg-zinc-800 text-white rounded-full text-lg font-medium mt-4"
         >
           Next
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

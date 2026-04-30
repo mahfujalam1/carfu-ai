@@ -126,16 +126,6 @@ export default function SettingsPage() {
                     </span>
                   </div>
                 </div>
-
-                {/* Date of Birth */}
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-zinc-400 ml-1">Date of Birth</label>
-                  <Input
-                    type="date"
-                    defaultValue="1998-05-14"
-                    className="bg-white/5 border-white/5 h-12 md:h-14 rounded-xl md:rounded-2xl focus-visible:ring-white/20 text-white [color-scheme:dark] cursor-pointer"
-                  />
-                </div>
               </div>
 
               <div className="pt-4 flex justify-end">
